@@ -1,5 +1,6 @@
 import type { NextRequest } from 'next/server'
 import { NextResponse } from 'next/server'
+
 import { getLandingBySlug } from '@/lib/landing'
 
 function pickWeighted<T extends { weight: number }>(items: T[]): T {
@@ -31,7 +32,8 @@ export function proxy(req: NextRequest) {
   const config = getLandingBySlug(slug)
   if (!config || !config.active) return NextResponse.next()
 
-  const variants = config.variants && config.variants.length > 0 ? config.variants : null
+  const variants =
+    config.variants && config.variants.length > 0 ? config.variants : null
   if (!variants) return NextResponse.next()
 
   const cookieName = `nr_v_${slug}`
